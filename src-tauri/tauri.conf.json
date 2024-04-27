@@ -17,15 +17,28 @@
         "open": true
       }
     },
+    "macOSPrivateApi": true,
     "windows": [
       {
         "title": "mews",
-        "width": 800,
-        "height": 600
+        "fullscreen": false,
+        "height": 600,
+        "resizable": false,
+        "width": 600,
+        "visible": false,
+        "hiddenTitle": true,
+        "decorations": false,
+        "focus": false,
+        "transparent": true
       }
     ],
     "security": {
       "csp": null
+    },
+    "systemTray": {
+      "iconPath": "icons/icon.png",
+      "iconAsTemplate": true,
+      "menuOnLeftClick": false
     },
     "bundle": {
       "active": true,
