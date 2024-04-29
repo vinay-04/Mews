@@ -1,20 +1,30 @@
+mod news_scraper;
+use std::fs;
+use tauri::{CustomMenuItem, Manager, SystemTray, SystemTrayEvent, SystemTrayMenu};
+use tauri_plugin_positioner::{Position, WindowExt};
+
 #[tauri::command]
 fn greet(name: &str) -> String {
     format!("Hello, {}! You've been greeted from Rust!", name)
 }
 
-use tauri::{CustomMenuItem, Manager, SystemTray, SystemTrayEvent, SystemTrayMenu};
-use tauri_plugin_positioner::{Position, WindowExt};
+#[tauri::command]
+fn get_news() {
+    let news = news_scraper::news_data_rss();
+    let news_json = serde_json::to_string(&news).unwrap();
+    fs::write("newsData.json", news_json).unwrap();
+}
 
 fn main() {
-    let system_tray_menu = SystemTrayMenu::new();
     let quit = CustomMenuItem::new("quit".to_string(), "Quit").accelerator("Cmd+Q");
     let refresh = CustomMenuItem::new("refresh".to_string(), "Refresh");
-    let system_tray_menu = SystemTrayMenu::new().add_item(refresh).add_item(quit);
     tauri::Builder::default()
         .plugin(tauri_plugin_positioner::init())
         .invoke_handler(tauri::generate_handler![greet])
-        .system_tray(SystemTray::new().with_menu(system_tray_menu))
+        .invoke_handler(tauri::generate_handler![get_news])
+        .system_tray(
+            SystemTray::new().with_menu(SystemTrayMenu::new().add_item(refresh).add_item(quit)),
+        )
         .on_system_tray_event(|app, event| {
             tauri_plugin_positioner::on_tray_event(app, &event);
             match event {
@@ -34,12 +44,11 @@ fn main() {
                 }
                 SystemTrayEvent::MenuItemClick { id, .. } => match id.as_str() {
                     "refresh" => {
-                        std::process::exit(0);
+                        get_news();
                     }
                     "quit" => {
                         std::process::exit(0);
                     }
-
                     _ => {}
                 },
                 _ => {}

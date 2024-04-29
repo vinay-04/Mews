@@ -1,11 +1,33 @@
 use reqwest::blocking;
 use rss::Channel;
-
+use serde::{Deserialize, Serialize};
+#[derive(Debug, Serialize, Deserialize)]
 pub struct News {
     pub title: Option<String>,
     pub time: Option<String>,
     pub url: Option<String>,
     pub description: Option<String>,
+}
+
+pub fn news_data_rss() -> Vec<News> {
+    let url = "https://www.moneycontrol.com/rss/latestnews.xml";
+    let data = blocking::get(url).unwrap().text().unwrap();
+    let channel = Channel::read_from(data.as_bytes()).unwrap();
+    let mut news: Vec<News> = Vec::new();
+    for item in channel.items {
+        let title = item.title.unwrap();
+        let url = item.link.unwrap();
+        let time = item.pub_date.unwrap();
+        let description = item.description.unwrap();
+        let news_data = News {
+            title: Some(title),
+            time: Some(time),
+            url: Some(url),
+            description: Some(description),
+        };
+        news.push(news_data);
+    }
+    return news;
 }
 
 // --------------------------------------------------------------------------------------   WEBSCRAPED DATA FROM MONEYCONTROL.COM  --------------------------------------------------------------------------------------
@@ -51,24 +73,3 @@ pub struct News {
 //     return news;
 // }
 // --------------------------------------------------------------------------------------   XXXXXXXXXXXXXXXXXXXXX  --------------------------------------------------------------------------------------
-
-pub fn news_data_rss() -> Vec<News> {
-    let url = "https://www.moneycontrol.com/rss/latestnews.xml";
-    let data = blocking::get(url).unwrap().text().unwrap();
-    let channel = Channel::read_from(data.as_bytes()).unwrap();
-    let mut news: Vec<News> = Vec::new();
-    for item in channel.items {
-        let title = item.title.unwrap();
-        let url = item.link.unwrap();
-        let time = item.pub_date.unwrap();
-        let description = item.description.unwrap();
-        let news_data = News {
-            title: Some(title),
-            time: Some(time),
-            url: Some(url),
-            description: Some(description),
-        };
-        news.push(news_data);
-    }
-    return news;
-}
