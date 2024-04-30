@@ -1,10 +1,11 @@
-import news from "../src-tauri/newsData.json";
 import { invoke } from "@tauri-apps/api";
+import news from "../src-tauri/newsData.json";
+import {open} from "@tauri-apps/api/shell";
 import "./App.css";
 
 
-function App() {
 
+function App() {
   return (
     <div class="container">
       <h1>Mews!!</h1>
@@ -14,7 +15,7 @@ function App() {
 
 
   {news.map((item) => (
-    <a href={`${item.url}`}>{item.title}</a>
+    <a onClick={() => open(item.url)}>{item.title}</a>
   ))}
 
     </div>

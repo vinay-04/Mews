@@ -10,7 +10,7 @@ fn greet(name: &str) -> String {
 
 #[tauri::command]
 fn get_news() {
-    let news = news_scraper::news_data_rss();
+    let news = news_scraper::news_data_scraper();
     let news_json = serde_json::to_string(&news).unwrap();
     fs::write("newsData.json", news_json).unwrap();
 }
