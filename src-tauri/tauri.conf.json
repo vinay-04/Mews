@@ -36,7 +36,7 @@
       "csp": null
     },
     "systemTray": {
-      "iconPath": "icons/icon.png",
+      "iconPath": "icons/logo.png",
       "iconAsTemplate": true,
       "menuOnLeftClick": false
     },

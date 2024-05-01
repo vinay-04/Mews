@@ -2,6 +2,7 @@ use reqwest::blocking;
 // use rss::Channel;
 use scraper::{Html, Selector};
 use serde::{Deserialize, Serialize};
+
 #[derive(Debug, Serialize, Deserialize)]
 pub struct News {
     pub title: Option<String>,

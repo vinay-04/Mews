@@ -4,8 +4,8 @@
   line-height: 24px;
   font-weight: 400;
 
-  color: #0f0f0f;
-  background-color: #f6f6f6;
+  /* color: #0f0f0f;
+  background-color: #f6f6f6; */
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -13,7 +13,7 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
-
+/* 
 .container {
   margin: 0;
   padding-top: 10vh;
@@ -106,4 +106,4 @@ button {
   button:active {
     background-color: #0f0f0f69;
   }
-}
+} */
