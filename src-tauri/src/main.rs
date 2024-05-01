@@ -2,6 +2,7 @@ mod news_scraper;
 use std::fs;
 use tauri::{CustomMenuItem, Manager, SystemTray, SystemTrayEvent, SystemTrayMenu};
 use tauri_plugin_positioner::{Position, WindowExt};
+use window_vibrancy::{apply_vibrancy, NSVisualEffectMaterial};
 
 #[tauri::command]
 fn get_news() {
@@ -23,6 +24,13 @@ fn main() {
         .system_tray(
             SystemTray::new().with_menu(SystemTrayMenu::new().add_item(refresh).add_item(quit)),
         )
+        .setup(|app| {
+            let window = app.get_window("main").unwrap();
+            #[cfg(target_os = "macos")]
+            apply_vibrancy(&window, NSVisualEffectMaterial::HudWindow, None, None)
+                .expect("Unsupported platform! 'apply_vibrancy' is only supported on macOS");
+            Ok(())
+        })
         .on_system_tray_event(|app, event| {
             tauri_plugin_positioner::on_tray_event(app, &event);
             match event {
