@@ -10,10 +10,6 @@ fn get_news() {
     let news_json = serde_json::to_string(&news).unwrap();
     fs::write("newsData.json", news_json).unwrap();
 }
-// .setup(|_app| {
-//     get_news();
-//     Ok(())
-// })
 
 fn main() {
     let quit = CustomMenuItem::new("quit".to_string(), "Quit").accelerator("Cmd+Q");
@@ -29,6 +25,7 @@ fn main() {
             #[cfg(target_os = "macos")]
             apply_vibrancy(&window, NSVisualEffectMaterial::HudWindow, None, None)
                 .expect("Unsupported platform! 'apply_vibrancy' is only supported on macOS");
+            app.set_activation_policy(tauri::ActivationPolicy::Accessory);
             Ok(())
         })
         .on_system_tray_event(|app, event| {
