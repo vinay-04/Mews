@@ -11,11 +11,18 @@
   },
   "tauri": {
     "allowlist": {
+      
       "all": false,
       "shell": {
         "all": false,
         "open": true
-      }
+        },"fs": {
+          "all": true, 
+          "readFile": true,
+          "writeFile": true,
+          "renameFile": true,
+          "exists": true
+        }
     },
     "macOSPrivateApi": true,
     "windows": [
