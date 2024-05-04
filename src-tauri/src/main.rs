@@ -50,6 +50,8 @@ fn main() {
                 }
                 SystemTrayEvent::MenuItemClick { id, .. } => match id.as_str() {
                     "refresh" => {
+                        get_news();
+
                         let window = app.get_window("main").unwrap();
                         window.eval("window.location.reload();").unwrap();
                     }
