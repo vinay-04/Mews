@@ -1,18 +1,10 @@
 import {open} from "@tauri-apps/api/shell";
-import news from "../src-tauri/newsData.json";
-import { For, Show, createEffect, createSignal } from "solid-js";
+import news from `/Users/<username>/.newsData.json`;
+import { For, Show} from "solid-js";
 import "./App.css";
 
 
 function App() {
-  // const [newsData, setNews] = createSignal(news);
-  // createEffect(() => {
-  //   const filePath = '../src-tauri/newsData.json';
-  //   const fileContents = Deno.readTextFileSync(filePath);
-  //   if (fileContents !== news) {
-  //     console.log('The file contents have changed');
-  //   }
-  // });
 
   return (
     <div class="container">
@@ -29,6 +21,7 @@ function App() {
         </For>
       </Show>
     </div>
+
   );
 }
 

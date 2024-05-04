@@ -12,7 +12,8 @@ pub struct News {
 }
 
 pub fn news_data_scraper() -> Vec<News> {
-    let url = "https://www.moneycontrol.com/news/business/stocks/";
+    // let url = "https://www.moneycontrol.com/news/business/stocks/";
+    let url = "https://www.moneycontrol.com/news/business/markets/";
     let data = blocking::get(url).unwrap().text().unwrap();
     let document = Html::parse_document(&data);
 

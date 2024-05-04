@@ -6,9 +6,11 @@ use window_vibrancy::{apply_vibrancy, NSVisualEffectMaterial};
 
 #[tauri::command]
 fn get_news() {
+    let path = std::env::var("HOME").unwrap();
     let news = news_scraper::news_data_scraper();
     let news_json = serde_json::to_string(&news).unwrap();
-    fs::write("newsData.json", news_json).unwrap();
+    fs::write(format!("{}/.newsData.json", path), news_json.clone()).unwrap();
+    // news_json
 }
 
 fn main() {
@@ -21,6 +23,7 @@ fn main() {
             SystemTray::new().with_menu(SystemTrayMenu::new().add_item(refresh).add_item(quit)),
         )
         .setup(|app| {
+            get_news();
             let window = app.get_window("main").unwrap();
             #[cfg(target_os = "macos")]
             apply_vibrancy(&window, NSVisualEffectMaterial::HudWindow, None, None)
@@ -47,7 +50,8 @@ fn main() {
                 }
                 SystemTrayEvent::MenuItemClick { id, .. } => match id.as_str() {
                     "refresh" => {
-                        get_news();
+                        let window = app.get_window("main").unwrap();
+                        window.eval("window.location.reload();").unwrap();
                     }
                     "quit" => {
                         std::process::exit(0);

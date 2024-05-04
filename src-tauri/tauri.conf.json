@@ -11,16 +11,21 @@
   },
   "tauri": {
     "allowlist": {
-      
       "all": false,
       "shell": {
         "all": false,
         "open": true
-        },"fs": {
+        },
+        "path": {
+          "all": true
+        },
+        "fs": {
           "all": true, 
+          "readDir": true,
           "readFile": true,
           "writeFile": true,
           "renameFile": true,
+
           "exists": true
         }
     },
@@ -59,5 +64,6 @@
         "icons/icon.ico"
       ]
     }
+    
   }
 }
