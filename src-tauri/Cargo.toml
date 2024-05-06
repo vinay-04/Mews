@@ -11,8 +11,7 @@ edition = "2021"
 tauri-build = { version = "1", features = [] }
 
 [dependencies]
-tauri = { version = "1", features = [ "path-all", "fs-all",
-    "shell-open",
+tauri = { version = "1", features = [ "api-all",
     "macos-private-api",
     "system-tray",
 ] }

@@ -11,23 +11,7 @@
   },
   "tauri": {
     "allowlist": {
-      "all": false,
-      "shell": {
-        "all": false,
-        "open": true
-        },
-        "path": {
-          "all": true
-        },
-        "fs": {
-          "all": true, 
-          "readDir": true,
-          "readFile": true,
-          "writeFile": true,
-          "renameFile": true,
-
-          "exists": true
-        }
+        "all": true
     },
     "macOSPrivateApi": true,
     "windows": [
